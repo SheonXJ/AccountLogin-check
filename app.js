@@ -2,7 +2,7 @@
 const express = require('express')
 const exhbs = require('express-handlebars')
 const mongoose = require('mongoose')
-const USERS = require('./models/users')
+const router = require('./routes/index')
 
 const app = express()
 const PORT = 3000
@@ -26,29 +26,8 @@ app.engine('hbs', exhbs({
 app.set('view engine', 'hbs')
 //Setting: body-parser
 app.use(express.urlencoded({ extended: true }))
-
-//Routes: index page
-app.get('/', (req,res) => {
-  res.render('index')
-})
-
-//Routes: catch login data at index page
-app.post('/', (req,res) => {
-  const inputEmail = req.body.email
-  const inputPassword = req.body.password
-  USERS.findOne({ email: inputEmail})
-    .lean()
-    .then(user => {
-      if (!user || !(user.password === inputPassword)) {
-        const status = 'error'
-        return res.render('index', {status})
-      }
-      if (user.password === inputPassword) {
-        return res.render('welcomePage', {user})
-      } 
-    })
-    .catch(error => console.log(error))
-})
+//Setting: router
+app.use(router)
 
 //Activate and listening on the express server
 app.listen(PORT, () => {
