@@ -25,4 +25,19 @@
       <button class="btn btn btn-outline-primary" type="submit">Sing in</button>
     </form>
   </div>
+
+  {{!-- alert: if data is not valid --}}
+  {{#if status}}
+  <div class="container alert row mx-auto justify-content-center mt-2">
+    <div class="col-8 text-center">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Username or Password is not valid!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
 </div>
